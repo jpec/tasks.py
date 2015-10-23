@@ -1,0 +1,218 @@
+/* style.css */
+/* Style for tasks application */
+/* Author: Julien Pecqueur (julien@peclu.net) */
+/* License: GPL */
+
+@-ms-viewport { width: device-width; }
+figure,
+li,
+ul,
+table,
+tr,
+td,
+th,
+p,
+blockquote,
+body {
+    margin: 0;
+    padding: 0;
+    font-size: 100%;
+}
+
+body {
+    margin: 0 auto;
+    padding: 0 10px;
+    width: 780px;
+    color: #333;
+    font-family: Arial, sans-serif;
+    text-rendering: optimizeLegibility;
+}
+
+h1 {
+    font-size: 150%;
+    border-bottom: 1px solid #333;
+}
+
+h2 {
+    font-size: 130%;
+    border-bottom: 1px solid #333;
+}
+
+a {
+    color: #0099FF;
+    text-decoration: none;
+}
+
+a:hover {
+    background-color: #0099FF;
+    color: #FFFFFF;
+}
+
+form p {
+    padding: 5px;
+}
+
+form p label {
+    display: inline-block;
+    vertical-align: middle;
+    text-align: right;
+    width: 200px;
+}
+
+form p select {
+    vertical-align: middle;
+    text-align: left;
+    padding: 5px;
+    border: 1px solid #CCCCCC;
+}
+
+form p select:hover {
+    box-shadow: 0 0 10px #0099FF;
+    cursor: pointer;
+}
+
+form p input {
+    vertical-align: middle;
+    text-align: left;
+    padding: 5px;
+    border: 1px solid #CCCCCC;
+}
+
+form p input:hover {
+    box-shadow: 0 0 10px #0099FF;
+    cursor: pointer;
+}
+
+form p input[type="submit"] {
+    background-color: #0099FF;
+    color: #FFFFFF;
+    font-weight: bold;
+    border: 1px solid #0099FF;
+    border-radius:5px 5px;
+    padding: 10px;
+    font-size: 100%;
+}
+
+form p label:hover a.cancel {
+    box-shadow: 0 0 10px #FF0000;
+    cursor: pointer;
+}
+
+form p label a.cancel{
+    vertical-align: middle;
+    text-decoration: none;
+    background-color: #FF0000;
+    color: #FFFFFF;
+    font-weight: bold;
+    border: 1px solid #FF0000;
+    border-radius:5px 5px;
+    padding: 10px;
+}
+
+/******************************************************/
+table {
+    font-family: monospace;
+    margin: 0;
+    padding: 0;
+    border-spacing: 0;
+    width: 100%;
+}
+
+table tr {
+    padding: 5px;
+    margin: 0;
+    border: 0;
+}
+
+table tr.headers {
+    background-color: #AAAAAA;
+    color: #FFFFFF;
+    font-weight: bold;
+}
+
+table tr td {
+    padding: 5px;
+    margin: 0;
+    border: 0;
+}
+
+table tr td a {
+    color: #333;
+}
+
+table tr:hover {
+    background-color: #0099FF;
+    color: #FFFFFF;
+}
+
+table tr:hover td a {
+    color: #FFFFFF;
+}
+
+table a:hover {
+    color: #FFFFFF;
+}
+
+table td.button {
+    padding: 2px;
+    text-align: right;
+}
+
+table td.button a img {
+    height: 14px;
+    opacity: 0.7;
+}
+
+table td.button a:hover img {
+    opacity: 1;
+}
+
+table tr.urgent a {
+    color: #FF0000;
+    font-weight: bold;
+}
+
+table tr.done a {
+    text-decoration:line-through;
+}
+
+table tr a.label {
+    padding: 2px;
+    box-shadow: 0 0 5px #000000;
+    font-weight: bold;
+}
+
+table tr.done a.label {
+    text-decoration:none;
+}
+
+p.button {
+    margin-top: 20px;
+}
+
+p.button a.button:hover {
+    box-shadow: 0 0 10px #0099FF;
+    cursor: pointer;
+}
+
+p.button a.button {
+    vertical-align: middle;
+    text-decoration: none;
+    background-color: #0099FF;
+    color: #FFFFFF;
+    font-weight: bold;
+    border: 1px solid #0099FF;
+    border-radius:5px 5px;
+    padding: 10px;
+}
+
+/* -------------------------------------------------------------------------- */
+/* FOOTER ------------------------------------------------------------------- */
+/* -------------------------------------------------------------------------- */
+p.footer {
+    border-top: 1px solid #333;
+    padding: 5px;
+    margin-top: 30px;
+    text-align: center;
+    font-size: 60%;
+}

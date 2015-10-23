@@ -1,0 +1,172 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr" lang="fr">
+    <head>
+        <title>{{c.NAME}} {{c.VERSION}}</title>
+            <meta name="generator" content="{{c.NAME}}" />
+            <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+            <meta http-equiv="Content-Language" content="fr" />
+            <link rel="icon" href="/s/favicon.png" />
+            <link rel="favicon" href="/s/favicon.png" />
+            <link rel="stylesheet" type="text/css" href="/s/style.css" media="screen" />
+    </head>
+    <body>
+        <h1>{{c.NAME}}</h1>
+
+%if m == 'new':
+        <h2>Création d'une nouvelle tâche</h2>
+        <form action="/tasks/new" method="GET" accept-charset="UTF-8">
+            <p>
+                <label for="team">Équipe</label>
+                <select name="team">
+%for team in d.list_of_teams():
+                    <option value="{{team.oid}}">{{team.lb}}</option>
+%end
+                </select>
+                </p>
+            <p>
+            <p>
+                <label for="milestone">Projet</label>
+                <select name="milestone">
+%for milestone in d.list_of_milestones():
+                    <option value="{{milestone.oid}}">{{milestone.lb}}</option>
+%end
+                </select>
+                </p>
+            <p>
+            <p>
+                <label for="task">Tâche</label>
+                <input type="text" size="50" maxlength="100" name="task" />
+            </p>
+            <p>
+                <label for="date">Date</label>
+                <input type="date" size="10" maxlength="10" name="date" value="{{d.today()}}"/>
+            </p>
+            <p>
+                <label for="urgent">Urgent</label>
+                <input type="checkbox" name="urgent" value="1"/>
+            </p>
+            <p>
+                <label for="done">Terminée</label>
+                <input type="checkbox" name="done" value="1"/>
+            </p>
+            <p>
+                <label for="evo">Évolution</label>
+                <input type="checkbox" name="evo" value="1"/>
+            </p>
+            <p>
+                <label for="save"><a href="/" title="Cancel" class="cancel">Annulation</a></label>
+                <input type="submit" name="save" value="Save" />
+            </p>
+        </form>
+%end
+
+%if m == 'edit':
+        <h2>Modification de la tâche {{t.oid}}</h2>
+        <form action="/tasks/edit/{{t.oid}}" method="GET" accept-charset="UTF-8">
+            <p>
+                <label for="team">Équipe</label>
+                <select name="team">
+%for team in d.list_of_teams():
+%if team.oid == t.team.oid:
+                    <option value="{{team.oid}}" selected>{{team.lb}}</option>
+%else:
+                    <option value="{{team.oid}}">{{team.lb}}</option>
+%end
+%end
+                </select>
+                </p>
+            <p>
+            <p>
+                <label for="milestone">Projet</label>
+                <select name="milestone">
+%for milestone in d.list_of_milestones():
+%if milestone.oid == t.milestone.oid:
+                    <option value="{{milestone.oid}}" selected>{{milestone.lb}}</option>
+%else:
+                    <option value="{{milestone.oid}}">{{milestone.lb}}</option>
+%end
+%end
+                </select>
+                </p>
+            <p>
+            <p>
+                <label for="task">Tâche</label>
+                <input type="text" size="50" maxlength="100" name="task" value="{{t.task}}" />
+            </p>
+            <p>
+                <label for="date">Date</label>
+                <input type="date" size="10" maxlength="10" name="date" value="{{t.date}}"/>
+            </p>
+            <p>
+                <label for="urgent">Urgent</label>
+%if t.urgent:
+                <input type="checkbox" name="urgent" value="1" checked/>
+%else:
+                <input type="checkbox" name="urgent" value="1"/>
+%end
+            </p>
+            <p>
+                <label for="done">Terminée</label>
+%if t.done:
+                <input type="checkbox" name="done" value="1" checked/>
+%else:
+                <input type="checkbox" name="done" value="1"/>
+%end
+            </p>
+            <p>
+                <label for="evo">Évolution</label>
+%if t.evo:
+                <input type="checkbox" name="evo" value="1" checked/>
+%else:
+                <input type="checkbox" name="evo" value="1"/>
+%end
+            </p>
+            <p>
+                <label for="save"><a href="/" title="Cancel" class="cancel">Annulation</a></label>
+                <input type="submit" name="save" value="Save" />
+            </p>
+        </form>
+%end
+
+<div>
+<h2>Liste des tâches</h2>
+        <table>
+            <tr class='headers'>
+                <td>Projet</td>
+                <td>Équipe</td>
+                <td>Deadline</td>
+                <td>Updated</td>
+                <td>Tâche</td>
+                <td></td>
+            </tr>
+%for task in d.list_of_tasks():
+%if task.urgent:
+            <tr class="urgent">
+%elif task.done:
+            <tr class="done">
+%else:
+            <tr>
+%end
+                <td><a class="label" style="color:{{task.milestone.fg}};background-color:{{task.milestone.bg}};" href="/tasks/edit/{{task.oid}}" title="Edit task {{task.oid}}...">{{task.milestone.lb}}</a></td>
+                <td><a class="label" style="color:{{task.team.fg}};background-color:{{task.team.bg}};" href="/tasks/edit/{{task.oid}}" title="Edit task {{task.oid}}...">{{task.team.lb}}</a></td>
+                <td><a href="/tasks/edit/{{task.oid}}" title="Edit task {{task.oid}}...">{{task.date}}</a></td>
+                <td><a href="/tasks/edit/{{task.oid}}" title="Edit task {{task.oid}}...">{{task.updated}}</a></td>
+%if task.evo:
+                <td><a href="/tasks/edit/{{task.oid}}" title="Edit task {{task.oid}}...">{{task.task}} *** EVO ***</a></td>
+%else:
+                <td><a href="/tasks/edit/{{task.oid}}" title="Edit task {{task.oid}}...">{{task.task}}</a></td>
+%end
+                <td class="button">
+                    <a href="/tasks/clone/{{task.oid}}" title="Clone task {{task.oid}}..."><img src="/s/clone.png" alt="clone" /></a>
+                    <a href="/tasks/urgent/{{task.oid}}" title="Toggle urgent flag for task {{task.oid}}..."><img src="/s/urgent.png" alt="urgent" /></a>
+                    <a href="/tasks/evo/{{task.oid}}" title="Toggle evolution flag for task {{task.oid}}..."><img src="/s/evo.png" alt="evo" /></a>
+                    <a href="/tasks/done/{{task.oid}}" title="Toggle done flag for task {{task.oid}}..."><img src="/s/done.png" alt="done" /></a>
+                    <a href="/tasks/delete/{{task.oid}}" title="Delete task {{task.oid}}..."><img src="/s/delete.png" alt="delete" /></a>
+                </td>
+            </tr>
+%end
+        </table>
+        <p class='button'><a href="/tasks/new" title="Nouvelle tâche" class='button'>Nouvelle tâche...</a></p>
+        <p class='footer'>{{c.NAME}} {{c.VERSION}} &copy; <a href='http://julienpecqueur.net' title='Author website'>Julien Pecqueur</a></p>
+    </body>
+</html>
