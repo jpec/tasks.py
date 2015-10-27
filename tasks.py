@@ -15,7 +15,7 @@ app = bottle.Bottle()
 def error404(error):
     return('(404) nothing here... are you lost?')
 
-@app.error(500)
+#@app.error(500)
 def error500(error):
     return('(500) stupid programmer!')
 
@@ -26,12 +26,11 @@ def server_static(filename):
 
 # Routes
 @app.route('/')
-@app.route('/tasks')
-@app.route('/tasks/<mode>')
-@app.route('/tasks/<mode>/<oid>')
-def tasks(mode=None, oid=None):
-    return(ui.process(bottle.request, mode, oid))
-
+@app.route('/<page>')
+@app.route('/<page>/<mode>')
+@app.route('/<page>/<mode>/<oid>')
+def tasks(page='tasks', mode=None, oid=None):
+    return(ui.process(bottle.request, page, mode, oid))
 
 # Run the application
 if __name__ == "__main__":

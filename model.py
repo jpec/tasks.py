@@ -81,6 +81,9 @@ class Object():
         d = query(self.__d, (self.oid,))
         debug(d)
 
+    def clone(self):
+        new = Object(lb=self.lb, bg=self.bg, fg=self.fg)
+
 class Milestone(Object):
     "Milestone"
     def __init__(self, oid=None, lb=None, fg='#000000', bg='#FFFFFF',
@@ -247,4 +250,16 @@ def list_of_tasks():
     q = query(sql)
     for (oid,) in q:
         r.append(Task(oid=oid))
+    return(r)
+
+def listall(classname):
+    if not classname in ['teams', 'milestones']:
+        return([])
+    r = []
+    q = query('SELECT rowid FROM {0}'.format(classname))
+    for (oid,) in q:
+        if classname == 'milestones':
+            r.append(Milestone(oid=oid))
+        if classname == 'teams':
+            r.append(Team(oid=oid))
     return(r)

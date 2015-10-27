@@ -86,7 +86,6 @@ form p input:hover {
 form p input[type="submit"] {
     background-color: #0099FF;
     color: #FFFFFF;
-    font-weight: bold;
     border: 1px solid #0099FF;
     border-radius:5px 5px;
     padding: 10px;
@@ -103,11 +102,11 @@ form p label a.cancel{
     text-decoration: none;
     background-color: #FF0000;
     color: #FFFFFF;
-    font-weight: bold;
     border: 1px solid #FF0000;
     border-radius:5px 5px;
     padding: 10px;
 }
+
 
 /******************************************************/
 table {
@@ -200,10 +199,10 @@ p.button a.button {
     text-decoration: none;
     background-color: #0099FF;
     color: #FFFFFF;
-    font-weight: bold;
     border: 1px solid #0099FF;
     border-radius:5px 5px;
     padding: 10px;
+    margin-right: 5px;
 }
 
 /* -------------------------------------------------------------------------- */

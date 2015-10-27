@@ -6,7 +6,15 @@
 from bottle import template, redirect
 import config, model
 
-def process(request, mode, oid):
+def process(request, page, mode, oid):
+    if page == 'tasks':
+        return(tasks(request, mode, oid))
+    if page in ['milestones', 'teams']:
+        return(admin(request, page, mode, oid))
+    return("(404)")
+
+
+def tasks(request, mode, oid):
     if mode is None:
         return(template('tasks.html', t=None, d=model, c=config, \
                         m=mode))
@@ -52,4 +60,34 @@ def process(request, mode, oid):
                              evo=request.query.evo)
     redirect('/')
 
-
+def admin(request, page, mode, oid):
+    if mode is None:
+        return(template('admin.html', page=page, t=None, d=model, c=config, m=mode))
+    if mode in ['edit', 'delete', 'clone'] \
+       and not oid is None:
+        if page == 'teams':
+            elt = model.Team(oid=oid)
+        if page == 'milestones':
+            elt = model.Milestone(oid=oid)
+        if not elt is None and mode == 'edit':
+            if not request.query.save == 'Save':
+                return(template('admin.html', page=page, t=elt, d=model, c=config, m=mode))
+            else:
+                elt.lb = request.query.lb
+                elt.fg = request.query.fg
+                elt.bg = request.query.bg
+                elt.active = request.query.active
+                elt.save()
+        if not elt is None and mode == 'delete':
+            elt.delete()
+        if not elt is None and mode == 'clone':
+            elt.clone()
+    if mode == 'new':
+        if not request.query.save == 'Save':
+            return(template('admin.html', page=page, t=None, d=model, c=config, m=mode))
+        else:
+            if page == 'teams':
+                elt = model.Team(lb=request.query.lb, fg=request.query.fg, bg=request.query.bg, active=request.query.active)
+            if page == 'milestones':
+                elt = model.Milestone(lb=request.query.lb, fg=request.query.fg, bg=request.query.bg, active=request.query.active)
+    redirect('/')

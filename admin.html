@@ -1,0 +1,96 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr" lang="fr">
+    <head>
+        <title>{{c.NAME}} {{c.VERSION}}</title>
+            <meta name="generator" content="{{c.NAME}}" />
+            <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+            <meta http-equiv="Content-Language" content="fr" />
+            <link rel="icon" href="/s/favicon.png" />
+            <link rel="favicon" href="/s/favicon.png" />
+            <link rel="stylesheet" type="text/css" href="/s/style.css" media="screen" />
+    </head>
+    <body>
+        <h1>{{c.NAME}}</h1>
+
+%if m == 'new':
+        <h2>Création d'un nouvel élément</h2>
+        <form action="/{{page}}/new" method="get" accept-charset="UTF-8">
+            <p>
+                <label for="lb">Label</label>
+                <input type="text" size="50" maxlength="100" name="lb" />
+            </p>
+            <p>
+                <label for="bg">Background color</label>
+                <input type="text" size="7" maxlength="7" name="bg" value='#FFFFFF' />
+            </p>
+            <p>
+                <label for="fg">Foreground color</label>
+                <input type="text" size="7" maxlength="7" name="fg" value='#000000' />
+            </p>
+            <p>
+                <label for="active">Enabled</label>
+                <input type="checkbox" name="active" value="1" checked/>
+            </p>
+            <p>
+                <label for="save"><a href="/{{page}}" title="Cancel" class="cancel">Annulation</a></label>
+                <input type="submit" name="save" value="Save" />
+            </p>
+        </form>
+%end
+
+%if m == 'edit':
+        <h2>Modification de l'élément {{t.oid}}</h2>
+        <form action="/{{page}}/edit/{{t.oid}}" method="get" accept-charset="UTF-8">
+            <p>
+                <label for="lb">Label</label>
+                <input type="text" size="50" maxlength="100" name="lb" value="{{t.lb}}" />
+            </p>
+            <p>
+                <label for="bg">Background color</label>
+                <input type="text" size="7" maxlength="7" name="bg" value='{{t.bg}}' />
+            </p>
+            <p>
+                <label for="fg">Foreground color</label>
+                <input type="text" size="7" maxlength="7" name="fg" value='{{t.fg}}' />
+            </p>
+            <p>
+                <label for="active">Enabled</label>
+%if t.active:
+                <input type="checkbox" name="active" value="1" checked="checked" />
+%else:
+                <input type="checkbox" name="active" value="1" />
+%end
+            </p>
+            <p>
+                <label for="save"><a href="/{{page}}" title="Cancel" class="cancel">Annulation</a></label>
+                <input type="submit" name="save" value="Save" />
+            </p>
+        </form>
+%end
+
+<h2>Liste des {{page}}</h2>
+        <table>
+            <tr class='headers'>
+                <td>Label</td>
+                <td>Background</td>
+                <td>Foreground</td>
+                <td>Enabled</td>
+                <td></td>
+            </tr>
+%for elt in d.listall(page):
+            <tr>
+                <td><a class="label" style="color:{{elt.fg}};background-color:{{elt.bg}};" href="/{{page}}/edit/{{elt.oid}}" title="Edit elt {{elt.oid}}...">{{elt.lb}}</a></td>
+                <td><a href="/{{page}}/edit/{{elt.oid}}" title="Edit elt {{elt.oid}}...">{{elt.bg}}</a></td>
+                <td><a href="/{{page}}/edit/{{elt.oid}}" title="Edit elt {{elt.oid}}...">{{elt.fg}}</a></td>
+                <td><a href="/{{page}}/edit/{{elt.oid}}" title="Edit elt {{elt.oid}}...">{{elt.active}}</a></td>
+                <td class="button">
+                    <a href="/{{page}}/clone/{{elt.oid}}" title="Clone elt {{elt.oid}}..."><img src="/s/clone.png" alt="clone" /></a>
+                    <a href="/{{page}}/delete/{{elt.oid}}" title="Delete elts {{elt.oid}}..."><img style="height:14px;width=14px;" src="/s/delete.png" alt="delete" /></a>
+                </td>
+            </tr>
+%end
+        </table>
+        <p class='button'><a href="/{{page}}/new" title="Nouvel élément" class='button'>Nouvel élément...</a><a href="/" title="Retour" class='button'>Retour liste des tâches</a></p>
+        <p class='footer'>{{c.NAME}} {{c.VERSION}} &copy; <a href='http://julienpecqueur.net' title='Author website'>Julien Pecqueur</a></p>
+    </body>
+</html>
