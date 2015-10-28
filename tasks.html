@@ -135,10 +135,10 @@
                 <td></td>
             </tr>
 %for task in d.list_of_tasks():
-%if task.urgent:
-            <tr class="urgent">
-%elif task.done:
+%if task.done:
             <tr class="done">
+%elif task.urgent:
+            <tr class="urgent">
 %else:
             <tr>
 %end
